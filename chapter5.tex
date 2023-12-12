@@ -3,69 +3,154 @@
 
 %TODO: 章の内容を記入．以下はサンプル．
 \section{ビルドモードでの構造物生成の実験}\label{sec:build_mode_generate}
-\ref{sec:build_mode}節にて解説したビルドモードについて，①``station''や②``japanese castle''とプロンプトを与えた際の生成結果を図\ref{fig:station1}，図\ref{fig:j_castle1}に示す．
+この節では，\ref{sec:build_mode}節にて解説したビルドモードがどのような構造物を生成可能であるかを，モデルやプロンプトの設定を踏まえて紹介する．
+
+\subsection{実験1}\label{sec:ex1}
+実験1では，BOTのビルドモードにおいて，詳細度の異なる2つのプロンプトをそれぞれ送信し，出力結果の比較を行った．今回の実験の設定内容は表\ref{tab:setting1}に記す．
+今回のテストケースとして駅の構造を生成した．
+なお、LLMによる出力結果は一定ではないため、表\ref{tab:setting1}のとおり，それぞれのプロンプトを3度送信した．
+その中から，それぞれ最も優れた結果を図\ref{fig:station1}に示す．
+\begin{table}[H]
+    \caption{実験1の設定}\label{tab:setting1}
+    \centering
+    \begin{tabular}{ll}
+        \hline \hline
+        モデル & gpt-3.5-turbo \\
+        \hline
+        左図プロンプト & train station \\
+        \hline
+        右図プロンプト & Build a train station.I want the tracks to use rails. \\
+        　 & And build the platform well. \\
+        \hline
+        試行回数 & 3回 \\
+        \hline
+    \end{tabular}
+\end{table}
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{fig/station1.png}
-    \caption{①の生成結果}
+    \includegraphics[width=0.95\textwidth]{fig/train_station1.PNG}
+    \caption{実験1の生成結果}
     \label{fig:station1}
 \end{figure}
 
+図\ref{fig:station1}右図の出力結果を見ると駅の外装のような構造物を作成していることが示唆される．
+しかし，左図構造物生成時のログを参照すると，下部の石レンガはプラットフォーム，上部の板材，ダークオークのフェンス，ガラスパネルはチケットカウンター，ベンチ，標識であると記載されているため，この出力結果は駅の外装ではなくモデルがあまり駅のプラットフォームについて理解せず生成したものであると言える．
+右図では，ログを参照したところ板材と石レンガでプラットフォームを作り，それに沿うようにレールを敷いていると記載されているため，プロンプトによって出力改善されたことが分かる．
+
+\subsection{実験2}\label{sec:ex2}
+実験2では，BOTのビルドモードにおいて，詳細度の異なる2つのプロンプトをそれぞれ送信し，出力結果の比較を行った．今回の実験の設定内容は表\ref{tab:setting2}に記す．
+実験1と同様に今回のテストケースとして駅の構造を生成した．
+なお、LLMによる出力結果は一定ではないため、表\ref{tab:setting1}のとおり，それぞれのプロンプトを3度送信した．
+その中から，それぞれ最も優れた結果を図\ref{fig:station1}に示す．
+\begin{table}[H]
+    \caption{実験2の設定}\label{tab:setting2}
+    \centering
+    \begin{tabular}{ll}
+        \hline \hline
+        モデル & gpt-4 \\
+        \hline
+        左図プロンプト & train station \\
+        \hline
+        右図プロンプト & Build a train station.I want the tracks to use rails. \\
+        　 & And build the platform well. \\
+        \hline
+        試行回数 & 3回 \\
+        \hline
+    \end{tabular}
+\end{table}
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{fig/j_castle1.png}
-    \caption{②の生成結果}
-    \label{fig:j_castle1}
-\end{figure}
-
-生成結果を見ると，図\ref{fig:station1}では駅のような外観は出来ているものの，駅の特徴を表すレールなどのブロックが置かれていないことが分かる．
-また，図\ref{fig:j_castle1}では，砦や城のような構造物ではあるものの，日本風ではないことが分かる．
-
-これらの生成結果を改善するために③``Build a train station. I want the tracks to use rails. And build the platform well.''，④``Build a Japanese castle. Since it is a Japanese castle, the walls are white and the roof is black. The floor size should get smaller as you go higher up. Please make about 5 floors. Also, please make a stone wall.''のプロンプトを与えた．生成結果を図\ref{fig:station2}，図\ref{fig:j_castle2}に示す．
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{fig/station2.png}
-    \caption{③の生成結果}
+    \includegraphics[width=0.95\textwidth]{fig/train_station2.PNG}
+    \caption{実験2の生成結果}
     \label{fig:station2}
 \end{figure}
 
+\subsection{実験3}\label{sec:ex3}
+実験3では，BOTのビルドモードにおいて，プロンプトによる構造物の生成を行い，その後追加のプロンプトを送信し，出力結果がどのように変化するかを検証した．今回の実験の設定内容は表\ref{tab:setting3}に記す．
+今回のテストケースとしてまず家を作成するプロンプト(表\ref{tab:setting3}プロンプト1)を送信し，その後窓を追加するプロンプト(表\ref{tab:setting3}プロンプト2)を送信した．
+なお、LLMによる出力結果は一定ではないため、表\ref{tab:setting3}のとおり，プロンプトを3度送信し，その中から，最も優れた結果を図\ref{fig:station1}に示す．
+
+\begin{table}[H]
+    \caption{実験3の設定}\label{tab:setting3}
+    \centering
+    \begin{tabular}{ll}
+        \hline \hline
+        モデル & gpt-4-1106-preview (GPT-4-Turbo) \\
+        \hline
+        プロンプト1 & please make house. \\
+        \hline
+        プロンプト2 & please add window. \\
+        \hline
+        試行回数 & 3回 \\
+        \hline
+    \end{tabular}
+\end{table}
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{fig/j_castle2.png}
-    \caption{④の生成結果}
-    \label{fig:j_castle2}
+    \includegraphics[width=0.95\textwidth]{fig/add_window.PNG}
+    \caption{実験3の生成結果}
+    \label{fig:add_window}
 \end{figure}
 
-生成結果を見ると，図\ref{fig:station2}はプラットフォームに沿ってレールが敷かれており，図\ref{fig:j_castle2}では細部は出来ていないものの日本風の城の形が出来ていることから，結果が改善されたことが分かる．
+\subsection{実験4}\label{sec:ex4}
+実験4では，BOTのビルドモードにおいて，プロンプトによる構造物の生成を行い，その後追加のプロンプトを送信し，出力結果がどのように変化するかを検証した．今回の実験の設定内容は表\ref{tab:setting3}に記す．
+実験3と同様にテストケースとしてまず家を作成するプロンプト(表\ref{tab:setting3}プロンプト1)を送信し，その後窓を追加するプロンプト(表\ref{tab:setting3}プロンプト2)を送信した．
+なお、LLMによる出力結果は一定ではないため、表\ref{tab:setting3}のとおり，プロンプトを3度送信し，その中から，最も優れた結果を図\ref{fig:station1}に示す．
 
-このようにLLMが仮想的な3D世界で構造物を作る例はほとんど存在せず，プロンプトエンジニアリングを駆使して自身の想像した構造物を形成することの最初の段階として，興味深い結果を示している．
+\begin{table}[H]
+    \caption{実験4の設定}\label{tab:setting4}
+    \centering
+    \begin{tabular}{ll}
+        \hline \hline
+        モデル & gpt-3.5-turbo-1106ファインチューニング済みモデル \\
+        \hline
+        プロンプト1 & please make house. \\
+        \hline
+        プロンプト2 & please add window. \\
+        \hline
+        試行回数 & 3回 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{fig/add_window2.PNG}
+    \caption{実験3の生成結果}
+    \label{fig:add_window2}
+\end{figure}
 
 \section{アンケート}
 BOTの有用性を検証するためBOTのデモとアンケートを実施した．
 デモ・アンケートは2023年10月16日に開催された，公立はこだて未来大学オープンラボの，イアンフランク研ブースにて行われ，計16人の学生がデモを行いアンケートに回答した．
 デモではBOTとの会話を始めに体験していただき，その後，ビルドモードを体験するように促した．
 
-\section{アンケートの結果・考察}
+\section{アンケートの実施と結果}
 デモを行った後のアンケートの結果の一例について表\ref{tab:answer1}，表\ref{tab:answer2}に示す．
 
 ``このBOTを使うことで新しい建築のアイデアやインスピレーションを得ることができましたか？''という質問について，``そう思う''を4，``どちらかというとそう思う''を3，``どちらかというとそう思わない''を2，``そう思わない''を1として平均を計算した結果，3.2　となった．
-また，``このBOTを使うことでLLM(ChatGPTなど)の使い方を新しく学ぶことができましたか？''の質問については同様の方法で平均を求めた結果，3.47となった．
-
-そう思う～そう思わないの4段階の同じ指標で回答してもらった結果，表\ref{tab:answer2}の結果のみ平均3.47と高かったことから，BOTによってLLMの新しい使い方を学べたことが示唆された．
 表\ref{tab:answer1}の結果では肯定的な意見が得られているものの，表\ref{tab:answer2}の結果より平均が低いことや\ref{sec:build_mode_generate}節の生成結果から考察するとビルドモードは改善の必要があると考えられる．
 \begin{table}[H]
     \centering
     \caption{このBOTを使うことで新しい建築のアイデアやインスピレーションを得ることができましたか？}
     \label{tab:answer1}
-    \includegraphics[width=0.8\textwidth]{fig/tab2.png}
+    \includegraphics[width=0.7\textwidth]{fig/tab2.png}
 \end{table}
+
+また，``このBOTを使うことでLLM(ChatGPTなど)の使い方を新しく学ぶことができましたか？''の質問については同様の方法で平均を求めた結果，3.47となった．
 
 \begin{table}[H]
     \centering
     \caption{このBOTを使うことでLLM(ChatGPTなど)の使い方を新しく学ぶことができましたか？}
     \label{tab:answer2}
-    \includegraphics[width=0.8\textwidth]{fig/tab3.png}
+    \includegraphics[width=0.7\textwidth]{fig/tab3.png}
 \end{table}
+
+そう思う～そう思わないの4段階の同じ指標で回答してもらった結果，表\ref{tab:answer2}の結果のみ平均3.47と高かったことから，BOTによってLLMの新しい使い方を学べたことが示唆された．
+
+
 
 

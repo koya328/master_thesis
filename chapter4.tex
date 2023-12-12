@@ -1,15 +1,34 @@
-\chapter{提案手法}	% TODO: 章題を記入．題は任意．
+\chapter{開発}	% TODO: 章題を記入．題は任意．
 \thispagestyle{plain}   % chapterの直後に必ず指定
 
 %TODO: 章の内容を記入．以下はサンプル．
+本研究では，\ref{chap:minecraft}章で述べたMinecraftの特性に焦点を当て，Minecraftの中でLLMを搭載したBOTを作成し，そのBOTと人間が対話を行ったり，共同作業を行ったりすることで，人間とAIの協力・協調関係の検証を行う．
+
 本章では作成したBOTについて解説する．
-BOTはwebアプリケーションを使用してMinecraftのマルチサーバーに参加することが可能である．
-プレイヤーは参加したBOTとチャットを用いて会話することが可能である．
+システムの全体像は図\ref{fig:system}のとおりである．
+プレイヤーはBOTログイン用webアプリケーションを使用して，BOTをMinecraftのマルチサーバーに参加させることが可能である．
+その後プレイヤーは，BOTが参加したマルチサーバーと同じサーバーにログインしMinecraftのチャットの機能(デフォルトでTキー)を用いてBOTと対話することができる．
+
+マルチサーバーにログインしたBOTはプレイヤーからのチャットの情報をLLMに送り，LLMからの返答をもとにプレイヤーへ返答や行動を行うことが可能である．
 詳細な機能については\ref{sec:webapp}節から\ref{sec:build_mode}節で解説する．
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig/my_system.PNG}
+    \caption{システムの全体像}
+    \label{fig:system}
+\end{figure}
 
 \section{Webアプリケーション}\label{sec:webapp}
 人間とAIの協力・協調を主目的とする以上，ユーザビリティについて追求する必要があると考えたため，BOTをログインさせるためのWebアプリケーションを作成した．
 従来までの方法でBOTを動かすためには，プログラミング環境構築のスキルを必要とするが，このアプリケーションではマイクラのマルチにログインする時と同様の情報を入力することで，簡単にBOTをログインさせることが可能となった．
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{fig/web_app.jpg}
+    \caption{Webアプリケーションのホーム画像}
+    \label{fig:web_app}
+\end{figure}
 
 \section{行動}\label{sec:act}
 BOTは事前に登録されている行動を実行することが可能である．
@@ -19,7 +38,7 @@ BOTの各行動はMineflayer API\cite{bib:Mineflayer}を用いて実装した．
 
 \section{ChatGPTによる応答}\label{sec:gpt_res}
 BOTはLLMを搭載したことで自然な返答が可能となっている．
-LLMはChatGPTやPaLM，ローカル環境で動作するDollyなどいくつかのモデルを検討し，実行速度，会話の自然さや機能面の観点から自己検証たところChatGPTが良かったことから，ChatGPT(gpt-3.5-turbo-0613)を用いた．
+LLMはChatGPTやPaLM，ローカル環境で動作するDollyなどいくつかのモデルを検討し，実行速度，会話の自然さや機能面の観点から自己検証を行ったところChatGPTが良かったことから，ChatGPT(gpt-3.5-turbo-0613)を用いた．
 
 初期プロンプトはVoyager\cite{bib:Voyager}のものを一部参考し，内容としてはChatGPTの役割，各会話のラウンドで与える情報，回答の際に守るべきルールを記載した．
 また，ChatGPT APIのFunction Calling機能を用いているので，\ref{sec:act}節の行動を，必要に応じて実行することが可能である．

@@ -1,8 +1,10 @@
 \chapter{環境}	
 \thispagestyle{plain}   % chapterの直後に必ず指定
 
+本章では，本研究のゲーム環境であるMinecraftやテスト環境のFUN Minecraft Serverについて述べる。
+
 \section{Minecraftとは}\label{sec:minecraft}
-Minecraftとは，創造性やサバイバル生活に焦点を当てた，サンドボックス型のゲームである．Minecraftの世界は図\ref{fig:mc_world}のように，3D空間で水平方向にほぼ無限に広がっており，木，石，土，水など様々な種類の一定の大きさの立方体ブロックで構成され，その世界にはドット絵調の動植物が存在する．プレイヤーは主に以下の二つのモードでゲームを楽しむことができる．\\
+Minecraft\cite{bib:Minecraft}とは，創造性やサバイバル生活に焦点を当てた，サンドボックス型のゲームである．Minecraftの世界は図\ref{fig:mc_world}のように，3D空間で水平方向にほぼ無限に広がっており，木，石，土，水など様々な種類の一定の大きさの立方体ブロックで構成され，その世界にはドット絵調の動植物が存在する．プレイヤーは主に以下の二つのモードでゲームを楽しむことができる．\\
 
 \textbf{サバイバルモード}　冒険と生活を主体としたモードである．体力や空腹度の概念が存在するため，プレイヤーは死を免れるために狩猟，採集，農業，牧畜などで食料を収集し，ブロックの収集や集めたアイテムの加工 (クラフト)を駆使して敵から逃れるための安全な住居を作らなければならない．\\
 
@@ -14,7 +16,7 @@ Minecraftとは，創造性やサバイバル生活に焦点を当てた，サ�
     \label{fig:mc_world}
 \end{figure}
 
-\section{Minecraftの特徴}
+\section{Minecraftの特徴}\label{sec:minecraft_feature}
 Minecraftには，以下のような学術的に有利な特徴がある．\\
 
 \textbf{認知度}　Minecraftは2011年にPCで正式版がリリースして以来，iOSやAndroidなどのスマートフォン機種や，Xbox One，Nintendo Switchなどの家庭用ゲーム機，その他様々なプラットフォームに移植された．
@@ -25,14 +27,26 @@ Minecraftには，以下のような学術的に有利な特徴がある．\\
 \textbf{ゲーム環境}　Minecraftは特定の目標がなく，オープンワールドであるため，AIの行動の可能性を広げることができる．
 また，場合によってはブロックの設置によって，逆に行動を制限させることもできるので，柔軟にAIの学習環境を設定することが可能である．\\
 
-\textbf{拡張性}　Minecraftは拡張機能 (MOD) やツールの種類が多く，Minecraft最大手のMOD公開サイトとなっているCurseForgeでは，2024年1月現在で約153,204のMODプロジェクトが公開されている．
-多くのMODが開発されている理由として，Minecraft EULAではMinecraftのMOD (プログラムの修正，ツール，プラグイン含む)の追加を許可しており，開発のためのコミュニティも活発であることが挙げられる．
+\textbf{拡張性}　Minecraftは拡張機能 (MOD) やツールの種類が多く，Minecraft最大手のMOD公開サイトとなっているCurseForge\cite{bib:curseforge}では，2024年1月現在で約153,204のMODプロジェクトが公開されている．
+多くのMODが開発されている理由として，Minecraft EULA\cite{bib:eula}ではMinecraftのMOD (プログラムの修正，ツール，プラグイン含む)の追加を許可しており，開発のためのコミュニティも活発であることが挙げられる．
 したがって，拡張性が高いため研究に合わせてゲーム性を保ったまま自由にMinecraftをカスタムすることが出来る．\\
-%TODO: Minecraft EULAのMOD推奨を入れる
 
 \textbf{教育的価値}　サバイバルや建築を楽しむことが出来るというそのゲーム性から，問題解決力や創造性を養うことが出来る．
-その教育性からMinecraft公式は，Minecraft Education (教育版マインクラフト)をリリースしている． \\
+その教育性からMinecraft公式は，Minecraft Education (教育版マインクラフト)\cite{bib:minecraft_edu}をリリースしている． \\
 
 \section{FUN Minecraft Serverについて}
+FUN Minecraft Server\cite{bib:fun_minecraft_server}は，公立はこだて未来大学の協力と支援のもとで成り立っている公認のサーバーである．
+複数の研究室と多くの有志メンバーから「Minecraftを用いた数多くの研究に繋がる可能性」への共感を得て，実現が可能となった．
+FUNマイクラ鯖プロジェクトの目的は，FUN Minecraft Serverのオンライン環境を通して，公立はこだて未来大学に所属する学生や教員が研究のアイデアの着想を得ることである．
+また，海外の大学では，Minecraftの公式サーバーを運用する事例が複数あり，効果的な成果があったと報告されている．
+しかしながら，国内の大学でMinecraftの公式サーバーを運用する事例はほとんど存在せず，FUN Minecraft Serverが国内の大学の公式サーバのモデルケースになる可能性が期待される．
 
-%TODO: Minecraft Serverについて書く
+FUN Minecraft Serverは，Minecraftのjava版のアカウントを取得しており，公立はこだて未来大学に所属している人であれば参加することが可能である．
+Minecraftの利点については\ref{sec:minecraft_feature}節で述べられているが，FUN Minecraft Server運営も同様に低コストで仮想空間にアクセス可能であることやチューリング完全であること，高いマシンスペックや特別な機材を要求されないこと，ワールドの再配布が容易であること，プログラムで制御可能であることなどの利点を述べている．
+また，明確な座標の定義がありデータ構造が均一であること、Mincraft自体の自由度が際限なく高く，世界的に有名なゲームであることを述べている．
+以上のことからバーチャルコミュニティや研究の環境としての親和性が高くサーバー運営に至ったことを述べている．
+
+実際にFUN Minecraft Serverでは様々な研究の環境として利用されている\cite{bib:fun_minecraft_server,bib:fun_minecraft_server_research}．
+本研究で作成したMasonもFUN Minecraft Serverを動作テストやアンケートを行うための環境として用いている．
+その他に，Minecraftで作成したビデオを使用して，小学生向けの教材を作成した研究が過去に存在していた．
+また，現行の研究では，BEVI-J評価ツールを使用して，FUN Minecraft Serverに参加した学生の人物像についての研究や，運営側でサーバーにPlan，CoreProtect，DiscordSRVなどのプラグインを導入し，コミュニティをモニタリング・管理し，ゲームプレイデータを収集・分析する研究などが行われている．

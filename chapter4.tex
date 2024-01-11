@@ -3,12 +3,12 @@
 
 本研究は，\ref{sec:minecraft}章で述べたMinecraftの特性に焦点を当て，Minecraftの中で大規模言語モデルを搭載したbotを作成し，そのbotと人間が対話を行ったり，共同作業を行ったりすることで，人間とAIの協力・協調関係の境界と可能性を探求することを目的としている．
 
-本章では作成したbot、``Mason''について解説する．
+本章では作成したbot、{\mason}について解説する．
 システムの全体像は図\ref{fig:system}のとおりである．
-プレイヤーはbotログイン用webアプリケーションを使用して，MasonをMinecraftのマルチサーバーに参加させることが可能である．
-その後プレイヤーは，Masonが参加したマルチサーバーと同じサーバーにログインしMinecraftのチャットの機能(デフォルトでTキー)を用いてMasonと対話することが可能である．
+プレイヤーはbotログイン用webアプリケーションを使用して，{\mason}をMinecraftのマルチサーバーに参加させることが可能である．
+その後プレイヤーは，{\mason}が参加したマルチサーバーと同じサーバーにログインしMinecraftのチャットの機能(デフォルトでTキー)を用いて{\mason}と対話することが可能である．
 
-MasonはMineflayer API\cite{bib:Mineflayer}を利用して実装されている．
+{\mason}はMineflayer API\cite{bib:Mineflayer}を利用して実装されている．
 Mineflayerは，botのセットアップやプレイヤーの発話や情報，ワールドの情報を読み取る機能、Minecraft内での行動を起こす機能などを総合的に提供するAPIである．
 プレイヤーからの発話や情報はモードに合わせて、適切な大規模言語モデルに送り，大規模言語モデルからの返答をもとにプレイヤーへ返答や行動を行うことが可能である．
 
@@ -33,8 +33,8 @@ Mineflayerは，botのセットアップやプレイヤーの発話や情報，�
 \end{figure}
 
 \section{行動}\label{sec:act}
-MasonがMinecraft世界に干渉して人間の作業などを手伝うことができるように，いくつかの行動を作成した．
-Masonの各行動はMineflayer API\cite{bib:Mineflayer}を用いて実装した．
+{\mason}がMinecraft世界に干渉して人間の作業などを手伝うことができるように，いくつかの行動を作成した．
+{\mason}の各行動はMineflayer API\cite{bib:Mineflayer}を用いて実装した．
 Mineflayer APIの関数は例外が発生するとbotがログアウトしてしまうため，基本的にMineflayer APIの関数に例外処理を加えて開発している．
 作成した行動には表\ref{tab:action}の種類がある．
 
@@ -51,9 +51,6 @@ Mineflayer APIの関数は例外が発生するとbotがログアウトしてし
         \hline
         smelt\_item & 説明: item\_nameで指定したアイテムをcountの個数分かまどで製錬する．fuel\_nameで燃料を指定する． \\
         　 & 引数: str item\_name, str fuel\_name, int count \\
-        \hline
-        mine\_block & 説明: nameで指定したブロックを指定個数採掘して集める \\
-        　 & 引数: str name, int count \\
         \hline
         craft\_item & 説明: nameで指定したアイテムをcountの個数分，作業台で作成する． \\
         　 & 引数: str name, int count \\
@@ -75,9 +72,9 @@ Mineflayer APIの関数は例外が発生するとbotがログアウトしてし
 
 \section{大規模言語モデルによるタスクの提示や会話}\label{sec:gpt_res}
 複数の大規模言語モデルを組み合わせることによって，サバイバルモードのプレイヤー向けの対話機能を作成した．
-この機能では，プレイヤーの発話と情報を元に，Masonが次のタスクを提示したり，\ref{sec:act}節の行動を起こすことでプレイヤーの作業を手伝ったり，質問や会話に返答することが可能になった．
+この機能では，プレイヤーの発話と情報を元に，{\mason}が次のタスクを提示したり，\ref{sec:act}節の行動を起こすことでプレイヤーの作業を手伝ったり，質問や会話に返答することが可能になった．
 
-プレイヤーの発話とは「how to make \textasciitilde?」，「please craft \textasciitilde.」，「please tell me next task.」のような，Masonに対する会話である．
+プレイヤーの発話とは「how to make \textasciitilde?」，「please craft \textasciitilde.」，「please tell me next task.」のような，{\mason}に対する会話である．
 
 プレイヤーの情報とは表\ref{tab:player_data}に示す，プレイヤーの現在の状態を表したJSONデータである.
 \begin{table}[H]
@@ -107,19 +104,20 @@ Mineflayer APIの関数は例外が発生するとbotがログアウトしてし
 
 発話が``Chat''に分類された場合，Chatモデルを用いて一般的な会話や質問に対応することができる．
 このモデルはRetrieval-Augmented Generation (RAG)\cite{bib:rag}を用いており，通常は応答することが不可能な情報に対しても，大量のデータを参考にして応答を生成することが可能である．
-RAGを用いる例として，Masonのテスト環境である，FUN Minecraft Server\cite{bib:fun_minecraft_server}に関する質問などが挙げられる．
-これらの情報はインターネット上に情報が少ないことからもとのGPTモデルが学習しておらず回答が不安定であるが，RAGによってMasonはそれらの特定の条件に関する質問に答えることが出来る．
+RAGを用いる例として，{\mason}のテスト環境である，FUN Minecraft Server\cite{bib:fun_minecraft_server}に関する質問などが挙げられる．
+これらの情報はインターネット上に情報が少ないことからもとのGPTモデルが学習しておらず回答が不安定であるが，RAGによって{\mason}はそれらの特定の条件に関する質問に答えることが出来る．
 
-発話が``Order''に分類された場合，Actionモデルを用いてMasonが命令を解釈した後，表\ref{tab:action}の行動を実行し，プレイヤーの作業を手伝うことが可能である．
-Orderに分類されるプレイヤーの発話の例としては，``cut the tree''などのMasonに対する命令文が考えられる．
+発話が``Order''に分類された場合，Actionモデルを用いて{\mason}が命令を解釈した後，表\ref{tab:action}の行動を実行し，プレイヤーの作業を手伝うことが可能である．
+Orderに分類されるプレイヤーの発話の例としては，``cut the tree''などの{\mason}に対する命令文が考えられる．
 命令文を受け取ると，Actionモデルでは，OpenAIのfunction calling\cite{bib:function_calling}によって適切な関数と引数が設定され，mine\_block("oak\_log",3)のように行動を実行することが可能である．
 
 ``Request Next Task''の分類では，プレイヤーの発話や情報がNext Taskモデルに，受け渡される．
-Next TaskモデルのプロンプトはVoyager\cite{bib:voyager}のプロンプトに基づいており，プレイヤーの発話と情報から，Masonがプレイヤーに対して次のタスクを提示する．
+Next TaskモデルのプロンプトはVoyager\cite{bib:voyager}のプロンプトに基づいており，プレイヤーの発話と情報から，{\mason}がプレイヤーに対して次のタスクを提示する．
 また，提案されたタスクはActionモデルに渡され，Actionモデルが行動を実行できる場合は，プレイヤーのタスクを支援することができる．
 例えば，プレイヤー情報のcollectedのリストが空である場合，モデルはプレイヤーがまだアイテムを集めたことがなく初期状態であると推論し，Minecraftにおける最初のタスク``cut the tree''などをプレイヤーに提案する．
 そして提示した``cut the tree''というタスクはActionモデルにわたり，mine\_block("oak\_log",3)といった行動を起こすことが出来る．
-したがって，Masonは初期状態のプレイヤーに対して``cut the tree''というタスクを提示し，同時にMasonも木を切って作業を手伝うことが出来る．
+したがって，{\mason}は初期状態のプレイヤーに対して``cut the tree''というタスクを提示し，同時に{\mason}も木を切って作業を手伝うことが出来る．
+この機能の動作については\ref{sec:gpt_res_test}節、動作についての考察は\ref{sec:gpt_res_investigation}で述べる。
 
 \begin{figure}[H]
     \centering
@@ -143,8 +141,6 @@ Next TaskモデルのプロンプトはVoyager\cite{bib:voyager}のプロンプ�
     \caption{構造物自動生成の生成結果}
     \label{fig:generate_example}
 \end{figure}
-
-
 
 \section{構造物自動生成のファインチューニング}
 人間の作成した構造物を学習させる事によりより複雑な構造が生成できることが考えられたため、構造物自動生成のファインチューニングを行った。

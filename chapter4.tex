@@ -135,6 +135,17 @@ Next TaskモデルのプロンプトはVoyager\cite{bib:voyager}のプロンプ�
 このプロンプトを初期プロンプトとして，作りたい構造物のプロンプトを送ると，fillコマンドのリストが提示され，fillコマンドのリストをMineflayerを通して順番に実行すると構造物が生成される．
 また，追加のプロンプトを使用して装飾を追加したり，修正を加えたりすることができる．
 
+この機能によって自動生成できる構造物の一例を図\ref{fig:generate_example}に示す。生成できる構造物については\ref{sec:build_mode_generate}節でその他多くの例を示し、その結果の考察について\ref{sec:generate_investigation}で述べる.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{fig/generate_example.png}
+    \caption{構造物自動生成の生成結果}
+    \label{fig:generate_example}
+\end{figure}
+
+
+
 \section{構造物自動生成のファインチューニング}
 人間の作成した構造物を学習させる事によりより複雑な構造が生成できることが考えられたため、構造物自動生成のファインチューニングを行った。
 ファインチューニング済みモデルを作成するまでの手順は学習データの作成とファインチューニングに分けて解説する。
